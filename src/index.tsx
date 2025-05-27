@@ -1,5 +1,3 @@
 import Transcription from './NativeTranscription';
-
-export function multiply(a: number, b: number): number {
-  return Transcription.multiply(a, b);
-}
+export * from './NativeTranscription'; // this re-exports TranscriptionEventEmitter
+export default Transcription;
