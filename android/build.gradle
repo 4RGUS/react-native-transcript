@@ -1,6 +1,24 @@
 buildscript {
   ext.getExtOrDefault = { name ->
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['Transcription_' + name]
+    if (rootProject.ext.has(name)) {
+      return rootProject.ext.get(name)
+    } else if (project.hasProperty("Transcription_" + name)) {
+      return project.property("Transcription_" + name)
+    } else {
+      // Default values for backward compatibility
+      switch (name) {
+        case "kotlinVersion":
+          return "1.6.10" 
+        case "compileSdkVersion":
+          return 31
+        case "minSdkVersion":
+          return 21
+        case "targetSdkVersion":
+          return 31
+        default:
+          throw new GradleException("Missing property $name and no default found")
+      }
+    }
   }
 
   repositories {
@@ -9,7 +27,7 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:8.7.2"
+    classpath "com.android.tools.build:gradle:7.1.3"
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
   }
@@ -22,7 +40,16 @@ apply plugin: "kotlin-android"
 apply plugin: "com.facebook.react"
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Transcription_" + name]).toInteger()
+  if (rootProject.ext.has(name)) {
+    return rootProject.ext.get(name)
+  } else {
+    switch (name) {
+      case "compileSdkVersion": return 31
+      case "minSdkVersion": return 21
+      case "targetSdkVersion": return 31
+      default: throw new GradleException("Property $name not found")
+    }
+  }
 }
 
 android {
