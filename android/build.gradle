@@ -1,14 +1,10 @@
-  ext {
-    // Use values from rootProject if available, otherwise fallback
-    compileSdkVersion = rootProject.ext.has("compileSdkVersion") ? rootProject.ext.get("compileSdkVersion") : 31
-    targetSdkVersion = rootProject.ext.has("targetSdkVersion") ? rootProject.ext.get("targetSdkVersion") : 31
-    minSdkVersion = rootProject.ext.has("minSdkVersion") ? rootProject.ext.get("minSdkVersion") : 21
-    kotlinVersion = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") :
-      (project.hasProperty("Transcription_kotlinVersion") ? project.property("Transcription_kotlinVersion") : "1.6.10")
-  }
+def compileSdkVersion = rootProject.ext.has("compileSdkVersion") ? rootProject.ext.get("compileSdkVersion") : 31
+def targetSdkVersion = rootProject.ext.has("targetSdkVersion") ? rootProject.ext.get("targetSdkVersion") : 31
+def minSdkVersion = rootProject.ext.has("minSdkVersion") ? rootProject.ext.get("minSdkVersion") : 21
+def kotlinVersion = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") :
+    (project.hasProperty("Transcription_kotlinVersion") ? project.property("Transcription_kotlinVersion") : "1.6.10")
 
 buildscript {
-
   repositories {
     google()
     mavenCentral()
@@ -16,7 +12,7 @@ buildscript {
 
   dependencies {
     classpath "com.android.tools.build:gradle:7.0.4"
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
   }
 }
 
@@ -27,11 +23,11 @@ apply plugin: "com.facebook.react"
 android {
   namespace "com.transcription"
 
-  compileSdkVersion rootProject.ext.compileSdkVersion
+  compileSdkVersion compileSdkVersion
 
   defaultConfig {
-    minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion rootProject.ext.targetSdkVersion
+    minSdkVersion minSdkVersion
+    targetSdkVersion targetSdkVersion
     buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", "false"
   }
 
@@ -72,7 +68,7 @@ repositories {
 
 dependencies {
   implementation "com.facebook.react:react-android"
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
 
 react {
