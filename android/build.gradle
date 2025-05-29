@@ -1,5 +1,7 @@
 buildscript {
-  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["Transcription_kotlinVersion"]
+  def kotlin_version = rootProject.ext.has("kotlinVersion") 
+    ? rootProject.ext.get("kotlinVersion") 
+    : project.properties["Transcription_kotlinVersion"] ?: "1.9.10"
 
   repositories {
     google()
@@ -7,39 +9,40 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.2.1"
+    classpath "com.android.tools.build:gradle:7.4.2"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
-}
-
-def isNewArchitectureEnabled() {
-  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
 }
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
-if (isNewArchitectureEnabled()) {
+if (project.hasProperty("newArchEnabled") && project.getProperty("newArchEnabled") == "true") {
   apply plugin: "com.facebook.react"
 }
 
+// Helpers
 def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["Transcription_" + name]
+  return rootProject.ext.has(name) 
+    ? rootProject.ext.get(name) 
+    : project.properties["Transcription_${name}"]
 }
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Transcription_" + name]).toInteger()
+  def value = getExtOrDefault(name)
+  return value != null ? value.toInteger() : null
 }
 
 android {
   namespace "com.transcription"
 
-  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion") ?: 33
 
   defaultConfig {
-    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
-    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
-    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion") ?: 21
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion") ?: 33
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", 
+      (project.hasProperty("newArchEnabled") && project.getProperty("newArchEnabled") == "true").toString()
   }
 
   buildFeatures {
@@ -49,6 +52,9 @@ android {
   buildTypes {
     release {
       minifyEnabled false
+    }
+    debug {
+      // Optional debug-specific config
     }
   }
 
@@ -63,11 +69,8 @@ android {
 
   sourceSets {
     main {
-      if (isNewArchitectureEnabled()) {
-        java.srcDirs += [
-          "generated/java",
-          "generated/jni"
-        ]
+      if (project.hasProperty("newArchEnabled") && project.getProperty("newArchEnabled") == "true") {
+        java.srcDirs += ["generated/java", "generated/jni"]
       } else {
         java.srcDirs += ["src/oldarch"]
       }
@@ -80,14 +83,14 @@ repositories {
   google()
 }
 
-def kotlin_version = getExtOrDefault("kotlinVersion")
+def kotlin_version = getExtOrDefault("kotlinVersion") ?: "1.9.10"
 
 dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
-if (isNewArchitectureEnabled()) {
+if (project.hasProperty("newArchEnabled") && project.getProperty("newArchEnabled") == "true") {
   react {
     jsRootDir = file("../src/")
     libraryName = "Transcription"
