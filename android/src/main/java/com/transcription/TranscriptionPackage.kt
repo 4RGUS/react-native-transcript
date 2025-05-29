@@ -21,9 +21,7 @@ class TranscriptionPackage : BaseReactPackage() {
     return ReactModuleInfoProvider {
       val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
       moduleInfos[TranscriptionModule.NAME] = ReactModuleInfo(
-        TranscriptionModule.NAME,
-        TranscriptionModule.NAME,
-        false,  // canOverrideExistingModule
+        TranscriptionModule.NAME, TranscriptionModule.NAME, false,  // canOverrideExistingModule
         false,  // needsEagerInit
         false,  // isCxxModule
         true // isTurboModule

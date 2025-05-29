@@ -1,7 +1,5 @@
 buildscript {
-  def kotlin_version = rootProject.ext.has("kotlinVersion") 
-    ? rootProject.ext.get("kotlinVersion") 
-    : project.properties["Transcription_kotlinVersion"] ?: "1.9.10"
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["Transcription_kotlinVersion"] ?: "1.9.10"
 
   repositories {
     google()
@@ -49,7 +47,7 @@ def supportsNamespace() {
 }
 
 android {
-    if (supportsNamespace()) {
+  if (supportsNamespace()) {
     namespace "com.transcription"
 
     sourceSets {
@@ -61,7 +59,7 @@ android {
 
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
-    defaultConfig {
+  defaultConfig {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
     buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
@@ -93,12 +91,10 @@ android {
   sourceSets {
     main {
       if (isNewArchitectureEnabled()) {
-        java.srcDirs += [
-          "src/newArch",
-          // Codegen specs
-          "generated/java",
-          "generated/jni"
-        ]
+        java.srcDirs += ["src/newArch",
+                         // Codegen specs
+                         "generated/java",
+                         "generated/jni"]
       } else {
         java.srcDirs += ["src/oldArch"]
       }
