@@ -3,7 +3,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.transcription.SpeechRecognitionManager
 
-class TranscriptionModuleLegacy(private val reactContext: ReactApplicationContext) :
+class TranscriptionModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
   private val manager = SpeechRecognitionManager(reactContext)
