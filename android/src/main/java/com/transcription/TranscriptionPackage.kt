@@ -20,11 +20,12 @@ class TranscriptionPackage : BaseReactPackage() {
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
+      val isTurboModule: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
       moduleInfos[TranscriptionModule.NAME] = ReactModuleInfo(
-        TranscriptionModule.NAME, TranscriptionModule.NAME, false,  // canOverrideExistingModule
-        false,  // needsEagerInit
-        false,  // isCxxModule
-        true // isTurboModule
+        TranscriptionModule.NAME, TranscriptionModule.NAME, canOverrideExistingModule = false,  // canOverrideExistingModule
+        needsEagerInit = false,
+        isCxxModule = false,
+        isTurboModule=isTurboModule
       )
       moduleInfos
     }
