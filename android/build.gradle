@@ -16,7 +16,7 @@ buildscript {
 
   dependencies {
     classpath "com.android.tools.build:gradle:7.0.4"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
   }
 }
 
@@ -72,7 +72,7 @@ repositories {
 
 dependencies {
   implementation "com.facebook.react:react-android"
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlinVersion}"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
 }
 
 react {
