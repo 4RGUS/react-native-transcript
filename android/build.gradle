@@ -78,7 +78,7 @@ android {
     main {
       // AndroidManifest location
       if (supportsNamespace()) {
-        manifest.srcFile "src/main/AndroidManifestNew.xml"
+        manifest.srcFile "src/main/AndroidManifest.xml"
       }
 
       // Common main sources
