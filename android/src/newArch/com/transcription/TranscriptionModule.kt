@@ -1,8 +1,8 @@
+package com.transcription
+
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.module.annotations.ReactModule
-import com.transcription.NativeTranscriptionSpec
-import com.transcription.SpeechRecognitionManager
 
 @ReactModule(name = TranscriptionModule.NAME)
 class TranscriptionModule(reactContext: ReactApplicationContext) :
