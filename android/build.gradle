@@ -84,16 +84,16 @@ android {
       // Common main sources
       java.srcDirs += ["src/main/java"]
 
-      // Add new or old architecture sources conditionally
+      // Adding new or old architecture sources conditionally
       if (isNewArchitectureEnabled()) {
         java.srcDirs += [
-          "src/newArch",           // your BaseReactPackage version
+          "src/newArch",           // BaseReactPackage version
           "generated/java",        // for codegen
           "generated/jni"
         ]
       } else {
         java.srcDirs += [
-          "src/oldArch"            // your legacy ReactPackage version
+          "src/oldArch"            // legacy ReactPackage version
         ]
       }
     }
