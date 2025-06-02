@@ -1,3 +1,4 @@
+import { language } from './language';
 import Transcription, {
   TranscriptionEventEmitter,
 } from './NativeTranscription';
@@ -15,3 +16,4 @@ export const destroyRecognizer = () => {
 };
 
 export { TranscriptionEventEmitter };
+export { language };
