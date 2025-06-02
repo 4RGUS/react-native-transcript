@@ -1,3 +1,17 @@
-import Transcription from './NativeTranscription';
-export * from './NativeTranscription'; // this re-exports TranscriptionEventEmitter
-export default Transcription;
+import Transcription, {
+  TranscriptionEventEmitter,
+} from './NativeTranscription';
+
+export const startListening = (language?: string) => {
+  Transcription.startListening(language ?? 'en-US');
+};
+
+export const stopListening = () => {
+  Transcription.stopListening();
+};
+
+export const destroyRecognizer = () => {
+  Transcription.destroyRecognizer();
+};
+
+export { TranscriptionEventEmitter };

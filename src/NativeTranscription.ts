@@ -8,7 +8,7 @@ import {
 import type { DeviceEventEmitterStatic, TurboModule } from 'react-native';
 
 export interface Spec extends TurboModule {
-  startListening(language?: string): void;
+  startListening(language: string): void;
   stopListening(): void;
   destroyRecognizer(): void;
 }
