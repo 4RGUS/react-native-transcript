@@ -13,9 +13,9 @@ class TranscriptionModule(private val reactContext: ReactApplicationContext) :
   override fun getName() = NAME
 
   @ReactMethod
-  fun startListening() {
+  fun startListening(language: String?) {
     reactContext.runOnUiQueueThread {
-      manager.startListening()
+      manager.startListening(language?: "en-US")
     }
   }
 

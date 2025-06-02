@@ -16,7 +16,7 @@ class SpeechRecognitionManager(private val reactContext: ReactContext) {
   private var speechRecognizer: SpeechRecognizer? = null
   private var recognizerIntent: Intent? = null
 
-  fun startListening() {
+  fun startListening(language: String = "en-US") {
     if (speechRecognizer == null) {
       speechRecognizer = SpeechRecognizer.createSpeechRecognizer(reactContext)
       speechRecognizer?.setRecognitionListener(object : RecognitionListener {
@@ -62,6 +62,7 @@ class SpeechRecognitionManager(private val reactContext: ReactContext) {
         putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, reactContext.packageName)
         putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+        putExtra(RecognizerIntent.EXTRA_LANGUAGE, language)
       }
     }
 
