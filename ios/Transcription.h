@@ -1,5 +1,5 @@
 #import <TranscriptionSpec/TranscriptionSpec.h>
+#import <React/RCTEventEmitter.h>
 
-@interface Transcription : NSObject <NativeTranscriptionSpec>
-
+@interface Transcription : RCTEventEmitter <NativeTranscriptionSpec>
 @end
