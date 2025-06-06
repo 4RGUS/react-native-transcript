@@ -1,8 +1,10 @@
 package com.transcription
 
 import com.facebook.react.bridge.NativeModule
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.Arguments
 import com.facebook.react.module.annotations.ReactModule
 
 @ReactModule(name = TranscriptionModule.NAME)
@@ -19,7 +21,7 @@ class TranscriptionModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   override fun startListening(language: String?) {
     reactApplicationContext.runOnUiQueueThread {
-      manager.startListening(language?: "en-US")
+      manager.startListening(language ?: "en-US")
     }
   }
 
@@ -33,6 +35,18 @@ class TranscriptionModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   override fun destroyRecognizer() {
     manager.destroyRecognizer()
+  }
+
+  @ReactMethod
+  fun getAvailableServices(promise: Promise) {
+    try {
+      val services = manager.getAvailableRecognitionServices()
+      val array = Arguments.createArray()
+      services.forEach { array.pushString(it) }
+      promise.resolve(array)
+    } catch (e: Exception) {
+      promise.reject("E_FETCH_SERVICES", "Failed to fetch services", e)
+    }
   }
 
   companion object {

@@ -3,6 +3,7 @@ package com.transcription
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognitionListener
+import android.speech.RecognitionService
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
@@ -77,6 +78,21 @@ class SpeechRecognitionManager(private val reactContext: ReactContext) {
     speechRecognizer?.destroy()
     speechRecognizer = null
     recognizerIntent = null
+  }
+
+  fun getAvailableRecognitionServices(): List<String> {
+    val services = mutableListOf<String>()
+    val pm = reactContext.packageManager
+    val recognitionIntent = Intent(RecognitionService.SERVICE_INTERFACE)
+    val resolveInfos = pm.queryIntentServices(recognitionIntent, 0)
+
+    for (resolveInfo in resolveInfos) {
+      val serviceInfo = resolveInfo.serviceInfo
+      val name = "${serviceInfo.packageName}/${serviceInfo.name}"
+      services.add(name)
+    }
+
+    return services
   }
 
   private fun sendEvent(eventName: String, params: WritableMap?) {

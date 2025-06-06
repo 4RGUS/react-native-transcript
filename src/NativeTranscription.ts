@@ -11,6 +11,7 @@ export interface Spec extends TurboModule {
   startListening(language: string): void;
   stopListening(): void;
   destroyRecognizer(): void;
+  getAvailableServices(): Promise<string[]>;
 }
 
 // Try to use TurboModules if available, fall back to legacy module

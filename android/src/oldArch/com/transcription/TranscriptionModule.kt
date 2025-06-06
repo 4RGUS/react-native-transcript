@@ -15,7 +15,7 @@ class TranscriptionModule(private val reactContext: ReactApplicationContext) :
   @ReactMethod
   fun startListening(language: String?) {
     reactContext.runOnUiQueueThread {
-      manager.startListening(language?: "en-US")
+      manager.startListening(language ?: "en-US")
     }
   }
 
@@ -29,6 +29,18 @@ class TranscriptionModule(private val reactContext: ReactApplicationContext) :
   @ReactMethod
   fun destroyRecognizer() {
     manager.destroyRecognizer()
+  }
+
+  @ReactMethod
+  fun getAvailableServices(promise: Promise) {
+    try {
+      val services = manager.getAvailableRecognitionServices()
+      val array = Arguments.createArray()
+      services.forEach { array.pushString(it) }
+      promise.resolve(array)
+    } catch (e: Exception) {
+      promise.reject("E_FETCH_SERVICES", "Failed to fetch services", e)
+    }
   }
 
   companion object {
