@@ -61,22 +61,15 @@ stopListening()
 ```
 
 ## 🧪 API Reference
-```
-1. startListening(language?: string | undefined): void
-2. stopListening()
-3. TranscriptionEventEmitter.addListener(
-    'onSpeechError',
-    event => {
-    console.log('onSpeechError', event);
-    },
-)
-4. TranscriptionEventEmitter.addListener(
-    'onSpeechPartialResults',
-    event => {
-    console.log('Partial result', event);
-    },
-)
-```
+| Method / Event                                                              | Description                        | Parameters                        | Returns               |
+| --------------------------------------------------------------------------- | ---------------------------------- | --------------------------------- | --------------------- |
+| `startListening(language?: string)`                                         | Starts speech recognition.         | `language` (optional) BCP-47 code | `void`                |
+| `stopListening()`                                                           | Stops speech recognition.          | None                              | None                  |
+| `TranscriptionEventEmitter.addListener('onSpeechError', callback)`          | Listen for recognition errors.     | `callback(event: any)`            | Event listener (void) |
+| `TranscriptionEventEmitter.addListener('onSpeechPartialResults', callback)` | Listen for partial speech results. | `callback(event: any)`            | Event listener (void) |
+| `TranscriptionEventEmitter.addListener('onSpeechResults', callback)` | Listen for complete speech results. | `callback(event: any)`            | Event listener (void) |
+
+
 
 ## 🚦 Permissions
 
