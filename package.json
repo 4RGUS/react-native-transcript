@@ -1,6 +1,7 @@
 {
-  "name": "react-native-transcription",
+  "name": "@4rgus/react-native-transcription",
   "version": "0.1.0",
+  "private": false,
   "description": "React Native library for speech transcription (TurboModules, Android & iOS)",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
